@@ -1,10 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
-    token_interface::{
-        burn_checked, transfer_checked, BurnChecked, Mint, TokenAccount, TokenInterface,
-        TransferChecked,
-    },
+    token_interface::{transfer_checked, Mint, TokenAccount, TokenInterface, TransferChecked},
 };
 use constant_product_curve::{ConstantProduct, LiquidityPair};
 

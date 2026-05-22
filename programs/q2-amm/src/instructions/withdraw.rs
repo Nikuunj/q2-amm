@@ -109,7 +109,7 @@ impl<'info> Withdraw<'info> {
         self.withdraw_token(false, y)
     }
 
-    pub fn withdraw_token(&self, is_x: bool, amount: u64) -> Result<()> {
+    fn withdraw_token(&self, is_x: bool, amount: u64) -> Result<()> {
         let (from, to, token_program, mint, decimals) = match is_x {
             true => (
                 self.vault_x.to_account_info(),
@@ -147,7 +147,7 @@ impl<'info> Withdraw<'info> {
         transfer_checked(cpi_ctx, amount, decimals)
     }
 
-    pub fn burn_lp_tokens(&self, amount: u64) -> Result<()> {
+    fn burn_lp_tokens(&self, amount: u64) -> Result<()> {
         let signer_seeds: &[&[&[u8]]] = &[&[
             b"config",
             &self.config.seed.to_le_bytes(),

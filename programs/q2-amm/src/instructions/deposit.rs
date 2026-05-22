@@ -88,7 +88,7 @@ pub struct Deposit<'info> {
 }
 
 impl<'info> Deposit<'info> {
-    fn deposit(&mut self, amount: u64, max_x: u64, max_y: u64) -> Result<()> {
+    pub fn deposit(&mut self, amount: u64, max_x: u64, max_y: u64) -> Result<()> {
         require!(!self.config.locked, AmmErrorCode::CustomError);
         require_neq!(amount, 0, AmmErrorCode::CustomError);
 
