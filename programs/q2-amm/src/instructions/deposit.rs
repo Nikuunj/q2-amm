@@ -151,7 +151,7 @@ impl<'info> Deposit<'info> {
     fn mint_lp_token(&self, amount: u64) -> Result<()> {
         let cpi_acc = MintTo {
             mint: self.mint_lp.to_account_info(),
-            to: self.user.to_account_info(),
+            to: self.user_lp.to_account_info(),
             authority: self.config.to_account_info(),
         };
 

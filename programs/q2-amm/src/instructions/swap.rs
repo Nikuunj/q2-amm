@@ -13,9 +13,9 @@ pub struct Swap<'info>{
     pub user: Signer<'info>,
 
     #[account(mint::token_program = token_program_x)]
-    pub mint_x: InterfaceAccount<'info, Mint>,
+    pub mint_x: Box<InterfaceAccount<'info, Mint>>,
     #[account(mint::token_program = token_program_y)]
-    pub mint_y: InterfaceAccount<'info, Mint>,
+    pub mint_y: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         mut,
@@ -24,7 +24,7 @@ pub struct Swap<'info>{
         seeds = [b"config", config.seed.to_le_bytes().as_ref()],
         bump = config.config_bump,
     )]
-    pub config: Account<'info, Config>,
+    pub config: Box<Account<'info, Config>>,
 
     #[account(
         mut,
@@ -33,7 +33,7 @@ pub struct Swap<'info>{
         mint::authority = config,
         mint::token_program = token_program_lp
     )]
-    pub mint_lp: InterfaceAccount<'info, Mint>,
+    pub mint_lp: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         mut,
@@ -41,7 +41,7 @@ pub struct Swap<'info>{
         associated_token::authority = config,
         associated_token::token_program = token_program_x
     )]
-    pub vault_x: InterfaceAccount<'info, TokenAccount>,
+    pub vault_x: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         mut,
@@ -49,7 +49,7 @@ pub struct Swap<'info>{
         associated_token::authority = config,
         associated_token::token_program = token_program_y
     )]
-    pub vault_y: InterfaceAccount<'info, TokenAccount>,
+    pub vault_y: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         mut,
@@ -57,7 +57,7 @@ pub struct Swap<'info>{
         associated_token::authority = user,
         associated_token::token_program = token_program_x
     )]
-    pub user_x: InterfaceAccount<'info, TokenAccount>,
+    pub user_x: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         mut,
@@ -65,7 +65,7 @@ pub struct Swap<'info>{
         associated_token::authority = user,
         associated_token::token_program = token_program_y
     )]
-    pub user_y: InterfaceAccount<'info, TokenAccount>,
+    pub user_y: Box<InterfaceAccount<'info, TokenAccount>>,
 
     pub associated_token_program: Program<'info, AssociatedToken>,
 

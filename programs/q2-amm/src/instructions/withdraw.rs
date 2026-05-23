@@ -148,21 +148,17 @@ impl<'info> Withdraw<'info> {
     }
 
     fn burn_lp_tokens(&self, amount: u64) -> Result<()> {
-        let signer_seeds: &[&[&[u8]]] = &[&[
-            b"config",
-            &self.config.seed.to_le_bytes(),
-            &[self.config.config_bump],
-        ]];
-
         let cpi_acc = BurnChecked {
             mint: self.mint_lp.to_account_info(),
-            authority: self.config.to_account_info(),
+            authority: self.user.to_account_info(),
             from: self.user_lp.to_account_info(),
         };
 
-        let cpi_cpi =
-            CpiContext::new_with_signer(self.token_program_lp.key(), cpi_acc, signer_seeds);
+        let cpi_ctx = CpiContext::new(
+            self.token_program_lp.key(),
+            cpi_acc,
+        );
 
-        burn_checked(cpi_cpi, amount, self.mint_lp.decimals)
+        burn_checked(cpi_ctx, amount, self.mint_lp.decimals)
     }
 }
