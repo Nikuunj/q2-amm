@@ -13,9 +13,9 @@ pub struct Initialize<'info> {
     pub initializer: Signer<'info>,
 
     #[account(mint::token_program = token_program_x)]
-    pub mint_x: InterfaceAccount<'info, Mint>,
+    pub mint_x: Box<InterfaceAccount<'info, Mint>>,
     #[account(mint::token_program = token_program_y)]
-    pub mint_y: InterfaceAccount<'info, Mint>,
+    pub mint_y: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         init,
@@ -24,7 +24,7 @@ pub struct Initialize<'info> {
         bump,
         space = Config::INIT_SPACE + Config::DISCRIMINATOR.len()
     )]
-    pub config: Account<'info, Config>,
+    pub config: Box<Account<'info, Config>>,
 
     #[account(
         init,
@@ -35,7 +35,7 @@ pub struct Initialize<'info> {
         mint::authority = config,
         mint::token_program = token_program_lp
     )]
-    pub mint_lp: InterfaceAccount<'info, Mint>,
+    pub mint_lp: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         init,
@@ -44,7 +44,7 @@ pub struct Initialize<'info> {
         associated_token::authority = config,
         associated_token::token_program = token_program_x
     )]
-    pub vault_x: InterfaceAccount<'info, TokenAccount>,
+    pub vault_x: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         init,
@@ -53,7 +53,7 @@ pub struct Initialize<'info> {
         associated_token::authority = config,
         associated_token::token_program = token_program_y
     )]
-    pub vault_y: InterfaceAccount<'info, TokenAccount>,
+    pub vault_y: Box<InterfaceAccount<'info, TokenAccount>>,
 
     pub associated_token_program: Program<'info, AssociatedToken>,
 

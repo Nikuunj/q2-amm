@@ -8,7 +8,7 @@ use constant_product_curve::{ConstantProduct, LiquidityPair};
 use crate::{error::AmmErrorCode, state::Config};
 
 #[derive(Accounts)]
-pub struct Swap<'info> {
+pub struct Swap<'info>{
     #[account(mut)]
     pub user: Signer<'info>,
 
@@ -66,8 +66,6 @@ pub struct Swap<'info> {
         associated_token::token_program = token_program_y
     )]
     pub user_y: InterfaceAccount<'info, TokenAccount>,
-
-    pub user_lp: InterfaceAccount<'info, TokenAccount>,
 
     pub associated_token_program: Program<'info, AssociatedToken>,
 
